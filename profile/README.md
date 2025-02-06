@@ -62,15 +62,12 @@ More Examples:
 ## Pros & Cons of Partition Strategies
 
 Partitioning enables scalability and parallel processing. We support four partition assigners:
+
 ### Failover
-   - Failover Strategy in Message Queues:
-      Broker (the message producer or coordinator) sends tasks (messages) to a consumer.
-      If the consumer that was assigned the task fails (e.g., crashes or becomes unreachable), the failover strategy ensures that the task is not lost.
-      The task will then be sent to another available consumer to continue processing, ensuring high availability and resilience of the system.
-   - How it Works:
-      A consumer group may be set up with multiple consumers.
-      If a consumer fails, the message queue system detects the failure (typically via heartbeat checks or timeouts) and reassigns any unprocessed tasks to a different, healthy consumer in the group.
-      This ensures that the work continues even if individual consumers fail, providing fault tolerance.
+
+The **Failover Strategy** ensures high availability in the message queue system by reassigning tasks to healthy consumers if one fails. This approach, often implemented through a strategy like **heartbeat checks**, is commonly seen in distributed systems (see [Intersystems Failover Documentation](https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=GHA_failover) for more details).
+
+- **How it Works**: If a consumer fails, the system detects the failure and reassigns the task to another available consumer.
 
    - Pros:
       - Ensures high availability and reliability by assigning all partitions to a single consumer until failure occurs.
@@ -78,7 +75,7 @@ Partitioning enables scalability and parallel processing. We support four partit
   - Cons:
       - Can lead to load imbalance if one consumer handles too many partitions.
       - Recovery from failure can introduce latency.
-Cite: https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=GHA_failover
+
 ### Range
 - Pros:
   - Simple and efficient distribution of partitions across consumers.
