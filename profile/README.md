@@ -78,6 +78,7 @@ Partitioning enables scalability and parallel processing. We support four partit
   - Cons:
       - Can lead to load imbalance if one consumer handles too many partitions.
       - Recovery from failure can introduce latency.
+Cite: https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=GHA_failover
 ### Range
 - Pros:
   - Simple and efficient distribution of partitions across consumers.
