@@ -65,7 +65,9 @@ Partitioning enables scalability and parallel processing. We support four partit
 
 ### Failover
 
-The **Failover Strategy** ensures high availability in the message queue system by reassigning tasks to healthy consumers if one fails. This approach, often implemented through a strategy like **heartbeat checks**, is commonly seen in distributed systems (see [Intersystems Failover Documentation](https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=GHA_failover) for more details).
+The **Failover Strategy**: Broker (the message producer or coordinator) sends tasks (messages) to a consumer.
+If the consumer that was assigned the task fails (e.g., crashes or becomes unreachable), the failover strategy ensures that the task is not lost.
+The task will then be sent to another available consumer to continue processing, ensuring high availability and resilience of the system. (see [Intersystems Failover Documentation](https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=GHA_failover) for more details).
 
 - **How it Works**: If a consumer fails, the system detects the failure and reassigns the task to another available consumer.
 
