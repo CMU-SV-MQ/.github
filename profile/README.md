@@ -63,6 +63,15 @@ More Examples:
 
 Partitioning enables scalability and parallel processing. We support four partition assigners:
 ### Failover
+   - Failover Strategy in Message Queues:
+      Broker (the message producer or coordinator) sends tasks (messages) to a consumer.
+      If the consumer that was assigned the task fails (e.g., crashes or becomes unreachable), the failover strategy ensures that the task is not lost.
+      The task will then be sent to another available consumer to continue processing, ensuring high availability and resilience of the system.
+   - How it Works:
+      A consumer group may be set up with multiple consumers.
+      If a consumer fails, the message queue system detects the failure (typically via heartbeat checks or timeouts) and reassigns any unprocessed tasks to a different, healthy consumer in the group.
+      This ensures that the work continues even if individual consumers fail, providing fault tolerance.
+
    - Pros:
       - Ensures high availability and reliability by assigning all partitions to a single consumer until failure occurs.
       - Reduces partition reassignment complexity.
