@@ -82,7 +82,6 @@ The task will then be sent to another available consumer to continue processing,
  
 The **Range Strategy**: In a range-based distribution, the broker (the message producer or coordinator) assigns tasks (messages) to consumers based on predefined ranges of partitions. Each consumer is responsible for a specific range of partitions. When a new consumer joins, the partitions are redistributed, but the range assigned to each consumer remains static unless the system rebalances. (see [Partitioning in Distributed Systems]([https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=GHA_failover](https://medium.com/@roopa.kushtagi/partitioning-in-distributed-systems-ade2fd0cc3ed)) for more details).
 
-
 - **How it Works**: The broker assigns partitions to consumers based on a range. For example, if there are 10 partitions and 3 consumers, each consumer is responsible for a consecutive range of partitions (e.g., Consumer 1 handles partitions 1-3, Consumer 2 handles partitions 4-6, and Consumer 3 handles partitions 7-10).
 
 - Pros:
@@ -93,13 +92,22 @@ The **Range Strategy**: In a range-based distribution, the broker (the message p
    - Does not dynamically rebalance partitions efficiently when new consumers join.
   
 ### Round-Robin
+The **Round-Robin Strategy**: ensures equitable distribution of tasks by assigning tasks sequentially to all consumers in a circular order. This strategy is widely used in scenarios requiring balanced load distribution across consumers.
+
+- **How it Works**: The broker assigns tasks to consumers one by one in a fixed rotation. For example, if there are three consumers (Consumer 1, Consumer 2, and Consumer 3), Task 1 will go to Consumer 1, Task 2 to Consumer 2, Task 3 to Consumer 3, and Task 4 will return to Consumer 1.
+
 - Pros:
-  - Distributes partitions evenly, preventing load imbalances.
-  - Helps in cases where consumers subscribe and unsubscribe frequently.
+   - Simple and ensures even task distribution across all consumers.
+   - Avoids overloading a single consumer in normal scenarios.
 - Cons:
-  - Frequent reassignment of partitions can lead to inefficient processing and state loss.
-  - Does not prioritize data locality or message order.
+   - Does not consider the current load or processing speed of individual consumers.
+   - May result in inefficiency if tasks have varying resource requirements.
+
 ### Sticky
+The **Sticky Strategy**: ensures task consistency by assigning tasks with the same key to the same consumer. This approach is commonly used when tasks require maintaining state or context.
+
+- **How it Works**: The broker uses a key (e.g., user ID or session ID) to map tasks to a specific consumer. For example, all tasks related to User A may always be routed to Consumer 1, while tasks for User B go to Consumer 2.
+
 - Pros:
   - Minimizes partition movement when consumers leave, preserving efficiency.
   - Ensures fairness in distribution without frequent reassignments.
