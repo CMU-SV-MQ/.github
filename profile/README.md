@@ -79,12 +79,19 @@ The task will then be sent to another available consumer to continue processing,
       - Recovery from failure can introduce latency.
 
 ### Range
+ 
+The **Range Strategy**: In a range-based distribution, the broker (the message producer or coordinator) assigns tasks (messages) to consumers based on predefined ranges of partitions. Each consumer is responsible for a specific range of partitions. When a new consumer joins, the partitions are redistributed, but the range assigned to each consumer remains static unless the system rebalances. (see [Partitioning in Distributed Systems]([https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=GHA_failover](https://medium.com/@roopa.kushtagi/partitioning-in-distributed-systems-ade2fd0cc3ed)) for more details).
+
+
+- **How it Works**: The broker assigns partitions to consumers based on a range. For example, if there are 10 partitions and 3 consumers, each consumer is responsible for a consecutive range of partitions (e.g., Consumer 1 handles partitions 1-3, Consumer 2 handles partitions 4-6, and Consumer 3 handles partitions 7-10).
+
 - Pros:
-  - Simple and efficient distribution of partitions across consumers.
-  - Works well when there are fewer partitions than consumers.
+   - Simple and efficient distribution of partitions across consumers.
+   - Works well when there are fewer partitions than consumers.
 - Cons:
-  - Consumers at the beginning of the list may get more partitions, causing uneven load distribution.
-  - Does not dynamically rebalance partitions efficiently when new consumers join.
+   - Consumers at the beginning of the list may get more partitions, causing uneven load distribution.
+   - Does not dynamically rebalance partitions efficiently when new consumers join.
+  
 ### Round-Robin
 - Pros:
   - Distributes partitions evenly, preventing load imbalances.
