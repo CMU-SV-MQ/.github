@@ -71,10 +71,10 @@ The task will then be sent to another available consumer to continue processing,
 
 - **How it Works**: If a consumer fails, the system detects the failure and reassigns the task to another available consumer.
 
-   - Pros:
+- Pros:
       - Ensures high availability and reliability by assigning all partitions to a single consumer until failure occurs.
       - Reduces partition reassignment complexity.
-  - Cons:
+- Cons:
       - Can lead to load imbalance if one consumer handles too many partitions.
       - Recovery from failure can introduce latency.
 
