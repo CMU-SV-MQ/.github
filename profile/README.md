@@ -33,7 +33,7 @@ docker build -t mq-proxy .
 docker compose up
 ```
 - This launches the message queue proxy at http://localhost:9090.
-- Use http://localhost:8080/swagger-ui/index.html to access API documentation.
+- Use http://localhost:9090/swagger-ui/index.html to access API documentation.
 
 3.	Start the Dashboard:
 ```sh
