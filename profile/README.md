@@ -10,8 +10,8 @@ This is the overview of our GitHub organization. Our message queue system is des
 ## Setup & Workflow for Running Our MQ Service
 ### Prerequisites
 To run the message queue system, ensure you have the following installed:
-- **Docker**: [Installation Guide](https://docs.docker.com/engine/install/)
-- **Java Corretto 17 JDK**: [Download Here](https://docs.aws.amazon.com/corretto/latest/corretto-17-ug/downloads-list.html)
+- **Docker**
+- **Java 21 JDK**
 
 ### Running the System
 1. **Start Message Queue Brokers** (first, build and run brokers):
@@ -41,7 +41,7 @@ cd MessageQueueDashboard
 npm install
 npm start
 ```
-- Visit http://localhost:3000 for the MessageQueueDashboard.
+- Visit http://localhost:3000/Dashboard for the MessageQueueDashboard.
 - If running locally, copy src/local.config.json to src/config.json before starting.
 
 ## Conceptual MQ
@@ -174,7 +174,7 @@ The **Sticky Strategy**: ensures task consistency by assigning tasks with the sa
 For further design details, refer to design-decisions.md in the MessageQueue repository.
 
 ## Resources
-- Postman Collection: message-queue.postman_collection.json
-- API Docs: http://localhost:8080/swagger-ui/index.html
+- Postman Collection: `message-queue.postman_collection.json`
+- API Docs: http://localhost:9090/swagger-ui/index.html
 - Apache Ratis (Raft Consensus for Replication): Official Repo
 - gRPC: Used for efficient communication.
