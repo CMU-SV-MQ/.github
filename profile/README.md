@@ -153,11 +153,6 @@ The **Sticky Strategy**: ensures task consistency by assigning tasks with the sa
   - More complex to implement compared to other strategies.
   - Requires careful handling of edge cases during reassignment.
 
-# References:
-- Apache Kafka Partition Assignor Strategies: Kafka Docs
-- Apache Ratis Raft-based Replication: Apache Ratis
-- Message Queue Architectures and Use Cases: Distributed Messaging
-
 ## Architecture MQ
 
 ### Activity Diagram & Components
