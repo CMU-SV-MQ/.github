@@ -25,7 +25,7 @@ This creates:
 - 3 broker instances as Raft peers.
 - mq-network: A docker network for the system.
 
-2.	Start the Proxy Service:
+2. **Start the Proxy Service**:
 ```sh
 cd MessageQueueProxy
 ./mvnw clean install
@@ -35,14 +35,55 @@ docker compose up
 - This launches the message queue proxy at http://localhost:9090.
 - Use http://localhost:9090/swagger-ui/index.html to access API documentation.
 
-3.	Start the Dashboard:
+3. **Start the Dashboard**:
 ```sh
 cd MessageQueueDashboard
 npm install
 npm start
 ```
 - Visit http://localhost:3000/Dashboard for the MessageQueueDashboard.
-- If running locally, copy src/local.config.json to src/config.json before starting.
+
+## Workflow for Running Test Cases
+> The testing process is simplified by running with only **one broker**, and currently, there are 112 tests in total(part 1 has 66 tests, and part 2 has 46 tests).
+### Prerequisites
+Ensure the configuration file in MessageQueue and MessageQueueProxy use the same number of brokers.
+- check the `conf.properties` file, which exists in MessageQueue(`/MessageQueue/src/main/resources`) and MessageQueueProxy(`/MQProxy/src/main/resources`) respectively.
+```
+# Ensure use the same number of brokers
+raft.server.address.list=0.0.0.0:10024
+```
+
+### Workflow
+1. **Building the MQProxy JAR with Maven**
+- Run the commands below.
+```
+cd MessageQueueProxy
+git checkout testRunner
+cd MQProxy
+mvn clean install
+```
+- The system will generate the `MQProxy-0.0.1-SNAPSHOT.jar`, which exists in `/MQProxy/target` folder.
+
+2. **Running the test cases in MessageQueue**
+- Copy the jar package & Run the dependencies
+```
+cd MessageQueue
+git checkout 69b40d90d1e040708ca5d8c5012b5286282bdb56
+cd MessageQueue
+
+# Copy the MQProxy-0.0.1-SNAPSHOT.jar from MessageQueueProxy to MessageQueue
+cp <your path>/MessageQueueProxy/MQProxy/target/MQProxy-0.0.1-SNAPSHOT.jar .
+
+mvn clean install
+java -jar ./target/MessageQueue-1.0-SNAPSHOT-jar-with-dependencies.jar 0
+```
+
+- Open a new terminal
+```
+cd MessageQueue/MessageQueue
+java -jar MQProxy-0.0.1-SNAPSHOT.jar checkpoint
+java -jar MQProxy-0.0.1-SNAPSHOT.jar final
+```
 
 ## Conceptual MQ
 
